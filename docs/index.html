@@ -45,10 +45,6 @@
   .hero .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
   .hero .lead { font-size: 1.2rem; max-width: 34em; }
   .hero .sprite { max-width: 260px; margin: 0 auto; }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--card);
-          font-weight: 700; text-decoration: none; color: var(--ink); border: 2px solid var(--line); }
-  .chip.go { background: var(--apricot-dark); color: #fff; border-color: var(--apricot-dark); }
 
   section { padding: 54px 0; }
   section.alt { background: #FFFDF8; border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
@@ -66,12 +62,13 @@
   /* the stick and its buttons */
   .stick { width: 100%; max-width: 220px; margin: 0 auto; display: block; }
   .stick-row { display: grid; grid-template-columns: 240px 1fr; gap: 36px; align-items: center; }
-  .scroll { overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; background: var(--card); border-radius: 16px; overflow: hidden; border: 2px solid var(--line); }
-  th, td { text-align: left; padding: 12px 14px; vertical-align: top; border-bottom: 1px solid var(--line); }
-  th { font-family: Fredoka, sans-serif; font-weight: 500; background: #FFF1DC; }
-  tr:last-child td { border-bottom: 0; }
-  kbd { font: 700 .85rem Nunito, sans-serif; background: var(--ink); color: #fff; border-radius: 6px; padding: 2px 8px; }
+  .buttons { display: grid; gap: 18px; }
+  .buttons .card { display: grid; grid-template-columns: 54px 1fr; gap: 0 16px; align-items: start; }
+  .buttons .key { width: 54px; height: 54px; border-radius: 16px; border: 4px solid var(--ink); }
+  .buttons .key.action { background: var(--apricot); }
+  .buttons .key.menu { width: 22px; height: 54px; margin: 0 16px; border-radius: 8px; background: var(--meadow); }
+  .buttons h3 { margin-bottom: .25em; }
+  .buttons p { margin: 0; }
 
   /* moods */
   .moods { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
@@ -106,7 +103,16 @@
   .hearts i:nth-of-type(3) { left: 66%; top: 12%; width: 22px; height: 19px; animation-delay: 1.2s; }
   @keyframes rise { 0% { opacity: 0; transform: translateY(10px) scale(.7); } 20% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px) scale(1.1); } }
   @media (prefers-reduced-motion: reduce) { .hearts i { animation: none; opacity: 1; } }
-  .store { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; }
+  .store { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 12px 0 0; }
+  .store img { display: block; height: 44px; width: auto; }
+  .store img.gp { height: 66px; margin: -11px -10px; }   /* Google's badge carries its own clear space */
+  /* the hero: now and then a cuddle, with hearts (the flip-book sets .on for those frames) */
+  .hearts.hero-pom { width: 100%; max-width: 260px; margin: 0 auto; }
+  .hero-pom i { display: none; }
+  .hero-pom.on i { display: block; }
+  /* the stick's own screens */
+  .screen { display: block; width: 100%; max-width: 170px; aspect-ratio: 135 / 240; margin: 0 auto 14px; border-radius: 18px;
+            border: 6px solid var(--ink); background: var(--sky); }
 
   footer { background: var(--ink); color: #E8E8F0; padding: 36px 0; margin-top: 20px; }
   footer a { color: #FFD9A8; }
@@ -117,6 +123,10 @@
     .finds { grid-template-columns: repeat(4, 1fr); }
     .grid.three { grid-template-columns: repeat(2, 1fr); }
     .grid.three .card { padding: 12px; }
+    .grid.trip { grid-template-columns: 1fr; }
+    .grid.trip figure { display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: center; }
+    .grid.trip .screen { margin: 0; border-width: 4px; border-radius: 14px; }
+    .grid.trip figcaption { text-align: left; margin: 0; }
     th, td { padding: 10px 8px; font-size: .92rem; }
     .stick-row .sprite { margin: 0 auto; }
     dl.items { grid-template-columns: 1fr; gap: 2px; }
@@ -149,14 +159,8 @@
     <div>
       <h1>Meet Pom Pom</h1>
       <p class="lead">A little dog on your keyring who can smell the air. When the air is clean, Pom Pom is full of beans. When it isn't, Pom Pom feels it too, and helps you find somewhere fresher.</p>
-      <div class="chips">
-        <a class="chip go" href="#setup">Setting up</a>
-        <a class="chip" href="#start">Start here</a>
-        <a class="chip" href="#care">Charge it every night</a>
-        <a class="chip" href="#menu">Sound on and off</a>
-      </div>
     </div>
-    <img class="sprite" alt="Pom Pom, a fluffy orange Shiba Inu dog, blinking and wagging" data-frames="happy/base*8,happy/blink,happy/base*6,happy/wag_up,happy/wag_dn,happy/wag_up,happy/wag_dn" data-ms="160" src="img/happy/base.png">
+    <div class="hearts hero-pom"><img class="sprite" alt="Pom Pom, a fluffy orange Shiba Inu dog, blinking and wagging, and now and then cuddled with hearts rising" data-frames="happy/base*8,happy/blink,happy/base*6,happy/wag_up,happy/wag_dn,happy/wag_up,happy/wag_dn,happy/base*8,happy/blink,happy/base*6,happy/wag_up,happy/wag_dn,happy/wag_up,happy/wag_dn,happy/base*6,happy/joy_up!*2,happy/joy_dn!*2,happy/joy_up!*2,happy/joy_dn!*2,happy/joy_up!*2,happy/joy_dn!*2,happy/joy_up!*2,happy/joy_dn!*2,happy/joy_up!*2,happy/joy_dn!*2" data-ms="160" src="img/happy/base.png"><i></i><i></i><i></i></div>
   </div>
 </div>
 
@@ -166,7 +170,7 @@
     <p class="intro">Pom Pom gets its air readings from AirTrack, so it's set up with the AirTrack app. It takes about five minutes, at home.</p>
     <div class="grid">
       <div class="card step"><b class="n">1</b><h3>Get the app</h3><p>Install AirTrack on your phone and sign in. Pom Pom needs an <b>AirTrack Premium</b> account: its sniffs come out of that account's monthly allowance.</p>
-        <div class="store"><a class="chip" href="https://apps.apple.com/app/id6739182650">App Store</a><a class="chip" href="https://play.google.com/store/apps/details?id=com.airawarelabs.airtrack">Google Play</a></div></div>
+        <div class="store"><a href="https://apps.apple.com/app/id6739182650"><img src="img/badges/app-store.svg" alt="Download on the App Store"></a><a href="https://play.google.com/store/apps/details?id=com.airawarelabs.airtrack"><img class="gp" src="img/badges/google-play.png" alt="Get it on Google Play"></a></div></div>
       <div class="card step"><b class="n">2</b><h3>Wake Pom Pom</h3><p>Charge it, then press a button. The first time, its screen says <b>Set me up</b> and shows a QR code.</p></div>
       <div class="card step"><b class="n">3</b><h3>Scan the code</h3><p>Point your phone's camera at the code. It opens the AirTrack app, which talks to Pom Pom for a moment over its own little Wi-Fi network.</p></div>
       <div class="card step"><b class="n">4</b><h3>Your Wi-Fi</h3><p>Pick your home Wi-Fi in the app and type its password. You can add your phone's hotspot too, for answers on the go. When Pom Pom shows its face, you're done.</p></div>
@@ -178,10 +182,10 @@
   <div class="wrap">
     <h2>Start here</h2>
     <div class="grid">
-      <div class="card step"><b class="n">1</b><h3>Charge it</h3><p>Plug Pom Pom into any USB charger with the cable. A full charge takes about two hours and lasts a school day. A bolt on the battery means it's charging.</p></div>
-      <div class="card step"><b class="n">2</b><h3>Wake it up</h3><p>The screen goes off by itself to save the battery. Press either button to wake Pom Pom.</p></div>
-      <div class="card step"><b class="n">3</b><h3>Sniff!</h3><p>Press the front button and Pom Pom sniffs the air. At home it tells you straight away. Out and about it remembers, and tells you once you're home.</p></div>
-      <div class="card step"><b class="n">4</b><h3>Explore the menu</h3><p>Press the side button for the menu: walkies, copycat, tricks, your finds and more.</p></div>
+      <div class="card step"><b class="n">1</b><h3>Sniff!</h3><p>Press any button to wake Pom Pom, then the action button on the front to sniff the air. At home it tells you straight away what it smelt.</p></div>
+      <div class="card step"><b class="n">2</b><h3>Go walkies</h3><p>Press the menu button on the side, step down to <b>Walkies</b> and press the action button. Take Pom Pom along: it sniffs by itself as you go, even in a bag.</p></div>
+      <div class="card step"><b class="n">3</b><h3>Come home</h3><p>Back on your Wi-Fi, Pom Pom works out the air at every sniff: "We're home! Press to see what I found!" Press for your trip, then today's chart.</p></div>
+      <div class="card step"><b class="n">4</b><h3>Find clean air</h3><p>Next time, try another way: the back streets, or through the park. Cleaner air makes Pom Pom happier, and brings rarer finds.</p></div>
     </div>
   </div>
 </section>
@@ -190,24 +194,19 @@
   <div class="wrap">
     <h2>The two buttons</h2>
     <div class="stick-row">
-      <svg class="stick" viewBox="0 0 220 320" role="img" aria-label="The Pom Pom stick: a small rectangle with a screen, a big front button under it, and a side button on the right edge">
+      <svg class="stick" viewBox="0 0 220 320" role="img" aria-label="The Pom Pom stick: a small rectangle with a screen, a big action button under it, and a menu button on the right edge">
         <rect x="40" y="10" width="140" height="300" rx="26" fill="#F7F3EC" stroke="#1A2238" stroke-width="6"/>
         <rect x="58" y="30" width="104" height="186" rx="10" fill="#BFE8F8" stroke="#1A2238" stroke-width="4"/>
         <image href="img/happy/base.png" x="62" y="34" width="96" height="178" preserveAspectRatio="xMidYMid slice"/>
         <rect x="74" y="236" width="72" height="44" rx="16" fill="#E8973F" stroke="#1A2238" stroke-width="5"/>
-        <text x="110" y="300" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">front</text>
+        <text x="110" y="300" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">action</text>
         <rect x="178" y="120" width="16" height="62" rx="7" fill="#5FB04E" stroke="#1A2238" stroke-width="5"/>
-        <text x="204" y="112" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">side</text>
+        <text x="202" y="108" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">menu</text>
       </svg>
-      <div>
-        <p class="intro">A press is a quick click. A hold is keeping it down for about a second. The hint at the bottom of the screen always says what the buttons do right now.</p>
-        <div class="scroll"><table>
-          <tr><th>Button</th><th>On Pom Pom's face</th><th>Anywhere else</th></tr>
-          <tr><td><kbd>Front</kbd> press</td><td>Sniff the air</td><td>Next, or choose</td></tr>
-          <tr><td><kbd>Front</kbd> hold</td><td>Unpack the bag, once it turns orange</td><td>The bigger version: pop a find, hear a fact again</td></tr>
-          <tr><td><kbd>Side</kbd> press</td><td>Open the menu</td><td>Next item in the menu, or back to the menu</td></tr>
-          <tr><td><kbd>Side</kbd> hold</td><td colspan="2">Straight back to Pom Pom's face, from anywhere</td></tr>
-        </table></div>
+      <div class="buttons">
+        <div class="card"><span class="key action" aria-hidden="true"></span><div><h3>The action button</h3><p>The big one on the front does things. On Pom Pom's face it sniffs the air, or once the bag has turned orange, shows your trip. Everywhere else it chooses, or goes to the next one.</p></div></div>
+        <div class="card"><span class="key menu" aria-hidden="true"></span><div><h3>The menu button</h3><p>The little one on the side opens the menu and steps down it. From anything the menu opened, it takes you back. Keep it pressed for a second to go straight back to Pom Pom's face.</p></div></div>
+        <p class="intro">Not sure? The hint at the bottom of the screen always says what a press does right now.</p>
       </div>
     </div>
   </div>
@@ -234,7 +233,7 @@
       <img class="sprite" alt="Pom Pom's nose wrinkling as it sniffs" data-frames="happy/sniff_in,happy/sniff,happy/sniff_in,happy/sniff,happy/sniff,happy/sniff" data-ms="140" src="img/happy/sniff.png">
       <div>
         <h2>Sniff the air</h2>
-        <p>Press the front button and Pom Pom's nose wrinkles while it sniffs. To work out the air, it needs to be on Wi-Fi.</p>
+        <p>Press the action button and Pom Pom's nose wrinkles while it sniffs. To work out the air, it needs to be on Wi-Fi.</p>
         <p><b>At home</b>, it tells you straight away, and its mood changes to match. Really clean air sets off the zoomies; poor air and it shakes it off.</p>
         <p><b>Out and about</b> there's usually no Wi-Fi, so Pom Pom remembers each sniff instead: the busy road, the park, the school gate. Back home it works them all out, and you can see how the air was along the way. If a grown-up has set up their phone's hotspot, Pom Pom can answer on the go too.</p>
         <div class="tip">Press again within twenty seconds and Pom Pom gives the same answer without asking again. Each real sniff uses one of the month's sniffs, so there's no need to keep pressing.</div>
@@ -254,16 +253,16 @@
         </div>
       </div>
       <div>
-        <p class="intro">Press the side button to open the menu and to step down it. Press the front button to choose. From anything the menu opens, the side button brings you back to it.</p>
+        <p class="intro">Press the menu button to open the menu and to step down it. Press the action button to choose. From anything the menu opens, the menu button brings you back to it.</p>
         <dl class="items">
           <dt>Sound</dt><dd>On or off. Sound starts off. It's first in the menu so it's quick to switch off before class: side, then front.</dd>
           <dt>Walkies</dt><dd>Puts Pom Pom's lead on for a walk. During a walk it says <b>Home time</b>, which ends it.</dd>
-          <dt>Copycat</dt><dd>Say something and Pom Pom says it back in a squeaky puppy voice. Press the front button for a big deep dog voice. Needs sound on.</dd>
-          <dt>Bag</dt><dd>Sniffs taken with no Wi-Fi. Once they're worked out at home, the bag turns orange and you can unpack it.</dd>
+          <dt>Copycat</dt><dd>Say something and Pom Pom says it back in a squeaky puppy voice. Press the action button for a big deep dog voice. Needs sound on.</dd>
+          <dt>Bag</dt><dd>Sniffs from out and about. Once they're worked out at home the bag turns orange: choose it, or press the action button on Pom Pom's face, to see your trip.</dd>
           <dt>Finds</dt><dd>Your shelf of nature finds from walks.</dd>
           <dt>Facts</dt><dd>Pom Pom's book of air facts. It tells you one now and then after a sniff.</dd>
-          <dt>Today</dt><dd>A chart of today's air.</dd>
-          <dt>Tricks</dt><dd>Every one of Pom Pom's tricks, one after another. Press the front button to skip to the next.</dd>
+          <dt>Today</dt><dd>A chart of today's air, your trips included.</dd>
+          <dt>Tricks</dt><dd>Every one of Pom Pom's tricks, one after another. Press the action button to skip to the next.</dd>
           <dt>Details</dt><dd>For grown-ups: battery, Wi-Fi and the last reading.</dd>
         </dl>
       </div>
@@ -274,15 +273,22 @@
 <section id="walkies" class="alt">
   <div class="wrap">
     <h2>Walkies</h2>
+    <p class="intro">This is the big one. Out and about there's usually no Wi-Fi, so Pom Pom collects the air as you go, and shows you how it was when you get home.</p>
     <div class="grid">
-      <figure class="card anim"><img class="sprite" alt="Pom Pom doing a play bow, then hopping up" data-frames="happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn" data-ms="130" src="img/happy/bow_up.png"><figcaption><b>Off we go</b>Choose Walkies: a play bow, a hop, and the lead goes on.</figcaption></figure>
-      <figure class="card anim"><img class="sprite" alt="Pom Pom trotting" data-frames="happy/trot_0,happy/trot_1,happy/trot_2,happy/trot_1" data-ms="150" src="img/happy/trot_0.png"><figcaption><b>Trotting along</b>As you walk, Pom Pom trots, and sniffs by itself every few minutes.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom doing a play bow, then hopping up" data-frames="happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn" data-ms="130" src="img/happy/bow_up.png"><figcaption><b>Off we go</b>Menu button, down to Walkies, then the action button: a play bow, a hop, and the lead goes on.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom trotting" data-frames="happy/trot_0,happy/trot_1,happy/trot_2,happy/trot_1" data-ms="150" src="img/happy/trot_0.png"><figcaption><b>Trotting along</b>Pom Pom sniffs by itself every few minutes, screen on or off. Press the action button for a sniff of your own: "Ooh! I'll remember this one."</figcaption></figure>
       <div class="card"><h3>Finds</h3><p>Somewhere new, a sniff can turn up a find. Cleaner air means rarer finds, from a pebble to a butterfly. Nothing is ever taken away.</p>
         <div class="finds"><img src="img/finds/pebble.png" alt="pebble"><img src="img/finds/leaf.png" alt="leaf"><img src="img/finds/daisy.png" alt="daisy"><img src="img/finds/conker.png" alt="conker"><img src="img/finds/butterfly.png" alt="butterfly"><img src="img/finds/ladybird.png" alt="ladybird"></div></div>
     </div>
-    <div class="tip">Forgot to start walkies? If Pom Pom is carried for a few minutes, it sets off by itself, and shows you next time you look. Choose <b>Home time</b> when you're back, or it stops by itself after a while sitting still.</div>
-    <h3>No Wi-Fi? Into the bag</h3>
-    <p>Out and about there's usually no Wi-Fi, and that's fine. Pom Pom remembers each sniff ("Ooh! I'll remember this one") and keeps it in its bag. Back home on Wi-Fi it works them all out, and the bag turns orange. Hold the front button to unpack: you'll see the air along the way and what Pom Pom found.</p>
+    <h3 style="margin-top:36px">Coming home</h3>
+    <p class="intro">Choose <b>Home time</b> in the menu when you're back. On your Wi-Fi, Pom Pom works out the air at every sniff and the bag turns orange.</p>
+    <div class="grid three trip">
+      <figure class="card anim"><img class="screen" src="img/screens/greet.png" alt="Pom Pom's screen: We're home! Press to see what I found!"><figcaption><b>We're home!</b>Pom Pom says so as soon as it knows, or the next time you wake it.</figcaption></figure>
+      <figure class="card anim"><img class="screen" src="img/screens/trip.png" alt="The trip page: nine sniffs as coloured blocks from green to orange and back, from 3:30pm to 4:10pm, the best air 86 at 4pm, the worst 29 at 3pm, and a pebble, a daisy and a butterfly found"><figcaption><b>Our trip</b>Press the action button: a block for each sniff in its air's colour, the best and worst air, and what Pom Pom found.</figcaption></figure>
+      <figure class="card anim"><img class="screen" src="img/screens/today.png" alt="Today's chart: bars for each two hours of the day, coloured by the air"><figcaption><b>Today's air</b>Press again: the finds go on the shelf, and today's chart shows the trip in it.</figcaption></figure>
+    </div>
+    <div class="tip green"><b>Hunt for clean air.</b> Orange blocks usually mean a busy road. Next time, try the back streets or the park, and see if your blocks turn greener.</div>
+    <div class="tip">Forgot to start walkies? If Pom Pom is carried for a few minutes it sets off by itself, and shows you next time you look. And if you forget Home time, it stops by itself after a while sitting still.</div>
   </div>
 </section>
 
@@ -307,7 +313,7 @@
     <h2>Looking after Pom Pom</h2>
     <div class="grid">
       <div class="card"><h3>Charge it every night</h3><p>Like a phone. A charge lasts about a school day. The battery on the top strip turns amber under half and red when it's nearly empty.</p></div>
-      <div class="card"><h3>Quiet at school</h3><p>Sound starts off. To switch it on or off: side button for the menu, then the front button on <b>Sound</b>.</p></div>
+      <div class="card"><h3>Quiet at school</h3><p>Sound starts off. To switch it on or off: press the menu button, then the action button on <b>Sound</b>.</p></div>
       <div class="card"><h3>If it gets stuck</h3><p>Plug it into the charger. If it still doesn't wake up, ask the grown-up who gave it to you.</p></div>
       <div class="card"><h3>What Pom Pom keeps</h3><p>Pom Pom works out where it is from the Wi-Fi networks nearby, roughly, so it can smell the air there. It keeps its sniffs, with where they were, on the stick itself. The microphone only listens during Copycat, and nothing it hears is kept or sent anywhere.</p></div>
     </div>
@@ -322,17 +328,20 @@
 </footer>
 
 <script>
-// Flip-books: each data-frames list is played at data-ms per frame ("pose*4" repeats one).
+// Flip-books: each data-frames list is played at data-ms per frame ("pose*4" repeats one;
+// "pose!" frames set .on on the parent, which shows the hearts).
 // Still for anyone who prefers less motion, and only while on screen.
 (function () {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('img[data-frames]').forEach(img => {
-    const frames = [];
-    img.dataset.frames.split(',').forEach(f => { const [name, n] = f.split('*'); for (let i = 0; i < (+n || 1); i++) frames.push('img/' + name + '.png'); });
+    const frames = [], hearts = [];
+    img.dataset.frames.split(',').forEach(f => { const [name, n] = f.split('*'), on = name.endsWith('!');
+      for (let i = 0; i < (+n || 1); i++) { frames.push('img/' + name.replace('!', '') + '.png'); hearts.push(on); } });
     [...new Set(frames)].forEach(src => { const p = new Image(); p.src = src; });   // no flicker on the first loop
     if (still) return;
     let i = 0, timer = null;
-    const play = () => { timer = setInterval(() => { i = (i + 1) % frames.length; img.src = frames[i]; }, +img.dataset.ms || 150); };
+    const play = () => { timer = setInterval(() => { i = (i + 1) % frames.length; img.src = frames[i];
+      img.parentElement.classList.toggle('on', hearts[i]); }, +img.dataset.ms || 150); };
     new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!timer) play(); } else { clearInterval(timer); timer = null; } }).observe(img);
   });
 })();
