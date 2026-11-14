@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pom Pom: how to play</title>
+<meta name="description" content="How to play with Pom Pom, the little dog on your keyring who can smell the air.">
+<link rel="icon" href="img/happy/base.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Air Aware: colours taken from Pom Pom herself (her fur, the grass, her sky, her outline) */
+  :root {
+    --apricot: #E8973F; --apricot-dark: #A9531B; --meadow: #5FB04E; --meadow-dark: #3E7F34;
+    --sky: #D6EFFA; --sky-deep: #2C7DB3; --cream: #FFF6E6; --ink: #1A2238; --muted: #5A5F73;
+    --card: #FFFFFF; --line: #F0E2CC;
+    /* the device's own air bands, for the data only */
+    --b80: #00C853; --b60: #8DD600; --b40: #FFD600; --b20: #FF8C00; --b0: #FF1A1A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 17px/1.6 Nunito, system-ui, sans-serif; }
+  h1, h2, h3 { font-family: Fredoka, Nunito, sans-serif; font-weight: 600; line-height: 1.15; margin: 0 0 .5em; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); }
+  h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+  h3 { font-size: 1.25rem; }
+  p { margin: 0 0 1em; }
+  a { color: var(--sky-deep); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .sprite { display: block; width: 100%; max-width: 200px; aspect-ratio: 135 / 184; border-radius: 22px;
+            box-shadow: 0 4px 0 rgba(26,34,56,.12); background: var(--sky); object-fit: cover; }
+
+  /* top bar */
+  .top { position: sticky; top: 0; z-index: 5; background: rgba(255,246,230,.94); backdrop-filter: blur(6px); border-bottom: 2px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; gap: 18px; height: 58px; }
+  .brand { font-family: Fredoka, sans-serif; font-weight: 600; font-size: 1.15rem; text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .brand i { width: 14px; height: 14px; border-radius: 50%; background: var(--apricot); box-shadow: 9px 0 0 var(--meadow); margin-right: 9px; }
+  .top nav { margin-left: auto; display: flex; gap: 16px; overflow-x: auto; }
+  .top nav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: .95rem; white-space: nowrap; }
+  .top nav a:hover { color: var(--apricot-dark); }
+
+  /* hero */
+  .hero { background: linear-gradient(180deg, var(--sky) 0%, #E9F7EC 100%); padding: 56px 0 40px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
+  .hero .lead { font-size: 1.2rem; max-width: 34em; }
+  .hero .sprite { max-width: 260px; margin: 0 auto; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--card);
+          font-weight: 700; text-decoration: none; color: var(--ink); border: 2px solid var(--line); }
+  .chip.go { background: var(--apricot-dark); color: #fff; border-color: var(--apricot-dark); }
+
+  section { padding: 54px 0; }
+  section.alt { background: #FFFDF8; border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
+  .intro { max-width: 42em; font-size: 1.08rem; }
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+  .grid.three { grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--card); border-radius: 20px; padding: 20px; border: 2px solid var(--line); }
+  .card .sprite { margin: 0 auto 14px; max-width: 170px; }
+  .step { position: relative; padding-left: 64px; }
+  .step b.n { position: absolute; left: 18px; top: 18px; width: 34px; height: 34px; border-radius: 50%; background: var(--meadow); color: #fff;
+              display: grid; place-items: center; font-family: Fredoka, sans-serif; font-size: 1.1rem; }
+  .tip { background: #FFF1DC; border-left: 6px solid var(--apricot); padding: 14px 18px; border-radius: 12px; margin: 18px 0; }
+  .tip.green { background: #E9F6E5; border-color: var(--meadow); }
+
+  /* the stick and its buttons */
+  .stick { width: 100%; max-width: 220px; margin: 0 auto; display: block; }
+  .stick-row { display: grid; grid-template-columns: 240px 1fr; gap: 36px; align-items: center; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; background: var(--card); border-radius: 16px; overflow: hidden; border: 2px solid var(--line); }
+  th, td { text-align: left; padding: 12px 14px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { font-family: Fredoka, sans-serif; font-weight: 500; background: #FFF1DC; }
+  tr:last-child td { border-bottom: 0; }
+  kbd { font: 700 .85rem Nunito, sans-serif; background: var(--ink); color: #fff; border-radius: 6px; padding: 2px 8px; }
+
+  /* moods */
+  .moods { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .mood { text-align: center; }
+  .mood .sprite { margin: 0 auto 8px; }
+  .score { display: inline-block; padding: 2px 12px; border-radius: 999px; font-weight: 700; font-size: .9rem; }
+
+  /* the menu, drawn like the stick's */
+  .menu-row { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: start; }
+  .device { background: #BFE8F8; border-radius: 26px; padding: 14px; box-shadow: inset 0 0 0 6px #1A2238; }
+  .device .panel { background: #fff; border-radius: 14px; padding: 10px 10px 14px; }
+  .device .panel h4 { font: 600 1.05rem Fredoka, sans-serif; margin: 2px 8px 6px; }
+  .device .panel div { padding: 3px 10px; border-radius: 10px; font-weight: 700; }
+  .device .panel div.on { background: var(--apricot); color: #fff; }
+  dl.items { margin: 0; display: grid; grid-template-columns: 9em 1fr; gap: 10px 18px; }
+  dl.items dt { font-family: Fredoka, sans-serif; font-weight: 600; }
+  dl.items dd { margin: 0; }
+
+  .finds { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-width: 520px; }
+  .finds img { width: 100%; border-radius: 14px; background: #FFF8EA; border: 2px solid var(--line); }
+  .anim figcaption { text-align: center; margin-top: 4px; }
+  .anim figcaption b { font-family: Fredoka, sans-serif; font-weight: 600; font-size: 1.1rem; display: block; }
+  figure { margin: 0; }
+
+  footer { background: var(--ink); color: #E8E8F0; padding: 36px 0; margin-top: 20px; }
+  footer a { color: #FFD9A8; }
+
+  @media (max-width: 760px) {
+    .hero .wrap, .stick-row, .menu-row { grid-template-columns: 1fr; }
+    .moods { grid-template-columns: repeat(3, 1fr); }
+    .finds { grid-template-columns: repeat(4, 1fr); }
+    .grid.three { grid-template-columns: repeat(2, 1fr); }
+    .grid.three .card { padding: 12px; }
+    th, td { padding: 10px 8px; font-size: .92rem; }
+    .stick-row .sprite { margin: 0 auto; }
+    dl.items { grid-template-columns: 1fr; gap: 2px; }
+    dl.items dd { margin-bottom: 10px; }
+    .top nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><i></i>Air Aware</a>
+    <nav aria-label="Sections">
+      <a href="#start">Start here</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#sniff">Sniff</a>
+      <a href="#menu">Menu</a>
+      <a href="#walkies">Walkies</a>
+      <a href="#play">Play</a>
+      <a href="#care">Looking after it</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Meet Pom Pom</h1>
+      <p class="lead">A little dog on your keyring who can smell the air. When the air is clean, Pom Pom is full of beans. When it isn't, Pom Pom feels it too, and helps you find somewhere fresher.</p>
+      <div class="chips">
+        <a class="chip go" href="#start">Start here</a>
+        <a class="chip" href="#care">Charge it every night</a>
+        <a class="chip" href="#menu">Sound on and off</a>
+      </div>
+    </div>
+    <img class="sprite" alt="Pom Pom, a fluffy orange Shiba Inu dog, blinking and wagging" data-frames="happy/base*8,happy/blink,happy/base*6,happy/wag_up,happy/wag_dn,happy/wag_up,happy/wag_dn" data-ms="160" src="img/happy/base.png">
+  </div>
+</div>
+
+<section id="start">
+  <div class="wrap">
+    <h2>Start here</h2>
+    <div class="grid">
+      <div class="card step"><b class="n">1</b><h3>Charge it</h3><p>Plug Pom Pom into any USB charger with the cable. A full charge takes about two hours and lasts a school day. A bolt on the battery means it's charging.</p></div>
+      <div class="card step"><b class="n">2</b><h3>Wake it up</h3><p>The screen goes off by itself to save the battery. Press either button to wake Pom Pom.</p></div>
+      <div class="card step"><b class="n">3</b><h3>Sniff!</h3><p>Press the front button and Pom Pom sniffs the air right where you are, then tells you what it smelt.</p></div>
+      <div class="card step"><b class="n">4</b><h3>Explore the menu</h3><p>Press the side button for the menu: walkies, copycat, tricks, your finds and more.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="buttons" class="alt">
+  <div class="wrap">
+    <h2>The two buttons</h2>
+    <div class="stick-row">
+      <svg class="stick" viewBox="0 0 220 320" role="img" aria-label="The Pom Pom stick: a small rectangle with a screen, a big front button under it, and a side button on the right edge">
+        <rect x="40" y="10" width="140" height="300" rx="26" fill="#F7F3EC" stroke="#1A2238" stroke-width="6"/>
+        <rect x="58" y="30" width="104" height="186" rx="10" fill="#BFE8F8" stroke="#1A2238" stroke-width="4"/>
+        <image href="img/happy/base.png" x="62" y="34" width="96" height="178" preserveAspectRatio="xMidYMid slice"/>
+        <rect x="74" y="236" width="72" height="44" rx="16" fill="#E8973F" stroke="#1A2238" stroke-width="5"/>
+        <text x="110" y="300" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">front</text>
+        <rect x="178" y="120" width="16" height="62" rx="7" fill="#5FB04E" stroke="#1A2238" stroke-width="5"/>
+        <text x="204" y="112" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#1A2238">side</text>
+      </svg>
+      <div>
+        <p class="intro">A press is a quick click. A hold is keeping it down for about a second. The hint at the bottom of the screen always says what the buttons do right now.</p>
+        <div class="scroll"><table>
+          <tr><th>Button</th><th>On Pom Pom's face</th><th>Anywhere else</th></tr>
+          <tr><td><kbd>Front</kbd> press</td><td>Sniff the air</td><td>Next, or choose</td></tr>
+          <tr><td><kbd>Front</kbd> hold</td><td>Unpack the bag, once it turns orange</td><td>The bigger version: pop a find, hear a fact again</td></tr>
+          <tr><td><kbd>Side</kbd> press</td><td>Open the menu</td><td>Next item in the menu, or back to the menu</td></tr>
+          <tr><td><kbd>Side</kbd> hold</td><td colspan="2">Straight back to Pom Pom's face, from anywhere</td></tr>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="face">
+  <div class="wrap">
+    <h2>What Pom Pom's face tells you</h2>
+    <p class="intro">Along the top: Pom Pom's mood, the battery, and the air score from 0 to 100, where 100 is the cleanest. A little house means it's at home, a paw print means it's out and about. Pom Pom's mood always matches the last sniff.</p>
+    <div class="moods">
+      <div class="mood"><img class="sprite" src="img/thriving/base.png" alt="Pom Pom thriving, with sparkles"><b>Thriving</b><br><span class="score" style="background:var(--b80)">80–100</span></div>
+      <div class="mood"><img class="sprite" src="img/happy/base.png" alt="Pom Pom happy"><b>Happy</b><br><span class="score" style="background:var(--b60)">60–79</span></div>
+      <div class="mood"><img class="sprite" src="img/sleepy/base.png" alt="Pom Pom sleepy, on a hazy day"><b>Sleepy</b><br><span class="score" style="background:var(--b40)">40–59</span></div>
+      <div class="mood"><img class="sprite" src="img/panting/base.png" alt="Pom Pom panting, on a smoggy day"><b>Panting</b><br><span class="score" style="background:var(--b20)">20–39</span></div>
+      <div class="mood"><img class="sprite" src="img/yucky/base.png" alt="Pom Pom feeling poorly, tucked up in bed"><b>Poorly</b><br><span class="score" style="background:var(--b0);color:#fff">0–19</span></div>
+    </div>
+    <div class="tip green">Pom Pom never gets ill from the air for good, and it never blames you. When the air is poor it suggests somewhere fresher: a park, or a quieter street.</div>
+  </div>
+</section>
+
+<section id="sniff" class="alt">
+  <div class="wrap">
+    <div class="stick-row">
+      <img class="sprite" alt="Pom Pom's nose wrinkling as it sniffs" data-frames="happy/sniff_in,happy/sniff,happy/sniff_in,happy/sniff,happy/sniff,happy/sniff" data-ms="140" src="img/happy/sniff.png">
+      <div>
+        <h2>Sniff the air</h2>
+        <p>Press the front button and Pom Pom's nose wrinkles while it works out the air right where you are. Then it tells you, and its mood changes to match. Really clean air sets off the zoomies; poor air and it shakes it off.</p>
+        <p>Try a busy road, then a park or a quiet back street. The difference can be big. The end of the garden won't differ from the back door, though: the air map is about streets, not steps.</p>
+        <div class="tip">Press again within twenty seconds and Pom Pom gives the same answer without asking again. Each real sniff uses one of the month's sniffs, so there's no need to keep pressing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <h2>The menu</h2>
+    <div class="menu-row">
+      <div class="device" aria-hidden="true">
+        <div class="panel">
+          <h4>Menu</h4>
+          <div class="on">Sound: off</div><div>Walkies</div><div>Copycat</div><div>Bag</div><div>Finds</div><div>Facts</div><div>Today</div><div>Tricks</div><div>Details</div>
+        </div>
+      </div>
+      <div>
+        <p class="intro">Press the side button to open the menu and to step down it. Press the front button to choose. From anything the menu opens, the side button brings you back to it.</p>
+        <dl class="items">
+          <dt>Sound</dt><dd>On or off. Sound starts off. It's first in the menu so it's quick to switch off before class: side, then front.</dd>
+          <dt>Walkies</dt><dd>Puts Pom Pom's lead on for a walk. During a walk it says <b>Home time</b>, which ends it.</dd>
+          <dt>Copycat</dt><dd>Say something and Pom Pom says it back in a squeaky puppy voice. Press the front button for a big deep dog voice. Needs sound on.</dd>
+          <dt>Bag</dt><dd>Sniffs taken with no Wi-Fi. Once they're worked out at home, the bag turns orange and you can unpack it.</dd>
+          <dt>Finds</dt><dd>Your shelf of nature finds from walks.</dd>
+          <dt>Facts</dt><dd>Pom Pom's book of air facts. It tells you one now and then after a sniff.</dd>
+          <dt>Today</dt><dd>A chart of today's air.</dd>
+          <dt>Tricks</dt><dd>Every one of Pom Pom's tricks, one after another. Press the front button to skip to the next.</dd>
+          <dt>Details</dt><dd>For grown-ups: battery, Wi-Fi and the last reading.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="walkies" class="alt">
+  <div class="wrap">
+    <h2>Walkies</h2>
+    <div class="grid">
+      <figure class="card anim"><img class="sprite" alt="Pom Pom doing a play bow, then hopping up" data-frames="happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/bow_up,happy/bow_up,happy/bow_dn,happy/bow_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn,happy/hop_up,happy/hop_dn" data-ms="130" src="img/happy/bow_up.png"><figcaption><b>Off we go</b>Choose Walkies: a play bow, a hop, and the lead goes on.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom trotting" data-frames="happy/trot_0,happy/trot_1,happy/trot_2,happy/trot_1" data-ms="150" src="img/happy/trot_0.png"><figcaption><b>Trotting along</b>As you walk, Pom Pom trots, and sniffs by itself every few minutes.</figcaption></figure>
+      <div class="card"><h3>Finds</h3><p>Somewhere new, a sniff can turn up a find. Cleaner air means rarer finds, from a pebble to a butterfly. Nothing is ever taken away.</p>
+        <div class="finds"><img src="img/finds/pebble.png" alt="pebble"><img src="img/finds/leaf.png" alt="leaf"><img src="img/finds/daisy.png" alt="daisy"><img src="img/finds/conker.png" alt="conker"><img src="img/finds/butterfly.png" alt="butterfly"><img src="img/finds/ladybird.png" alt="ladybird"></div></div>
+    </div>
+    <div class="tip">Forgot to start walkies? If Pom Pom is carried for a few minutes, it sets off by itself, and shows you next time you look. Choose <b>Home time</b> when you're back, or it stops by itself after a while sitting still.</div>
+    <h3>No Wi-Fi? Into the bag</h3>
+    <p>Out and about there's usually no Wi-Fi, and that's fine. Pom Pom remembers each sniff ("Ooh! I'll remember this one") and keeps it in its bag. Back home on Wi-Fi it works them all out, and the bag turns orange. Hold the front button to unpack: you'll see the air along the way and what Pom Pom found.</p>
+  </div>
+</section>
+
+<section id="play">
+  <div class="wrap">
+    <h2>Play with Pom Pom</h2>
+    <p class="intro">Pom Pom loves being treated gently. Banging or shaking it does nothing at all.</p>
+    <div class="grid three">
+      <figure class="card anim"><img class="sprite" alt="Pom Pom with eyes shut, wagging" data-frames="happy/joy_up,happy/joy_up,happy/joy_dn,happy/joy_dn" data-ms="200" src="img/happy/joy_up.png"><figcaption><b>Cuddle</b>Hold Pom Pom calmly in your hand for a couple of seconds.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom with paws up, waving" data-frames="happy/belly_l*4,happy/belly_r*4" data-ms="120" src="img/happy/belly_l.png"><figcaption><b>Belly rub</b>Keep cuddling for a few seconds more: paws up!</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom lifting one paw, then the other" data-frames="happy/paw_l,happy/paw_l,happy/base,happy/paw_r,happy/paw_r,happy/base" data-ms="140" src="img/happy/paw_l.png"><figcaption><b>Rock</b>Rock Pom Pom gently and it paddles its paws.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom tilting its head to listen" data-frames="happy/tilt_l*4,happy/base*4,happy/tilt_r*4,happy/base*4" data-ms="120" src="img/happy/tilt_l.png"><figcaption><b>Copycat</b>Pom Pom tilts its head to listen, then says it back.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom dashing side to side" data-frames="thriving/zoom_l*2,thriving/zoom_up*2,thriving/zoom_r*2,thriving/zoom_up*2" data-ms="120" src="img/thriving/zoom_l.png"><figcaption><b>Zoomies</b>Find really clean air and Pom Pom races about.</figcaption></figure>
+      <figure class="card anim"><img class="sprite" alt="Pom Pom shaking its fur, eyes shut" data-frames="panting/shake_l,panting/shake_r" data-ms="120" src="img/panting/shake_l.png"><figcaption><b>Shake it off</b>After poor air, a good shake, then off somewhere fresher.</figcaption></figure>
+    </div>
+    <div class="tip green">Now and then, when you wake Pom Pom, it says something about the air from its last sniff. Choose <b>Tricks</b> in the menu to see all its moves.</div>
+  </div>
+</section>
+
+<section id="care" class="alt">
+  <div class="wrap">
+    <h2>Looking after Pom Pom</h2>
+    <div class="grid">
+      <div class="card"><h3>Charge it every night</h3><p>Like a phone. A charge lasts about a school day. The battery on the top strip turns amber under half and red when it's nearly empty.</p></div>
+      <div class="card"><h3>Quiet at school</h3><p>Sound starts off. To switch it on or off: side button for the menu, then the front button on <b>Sound</b>.</p></div>
+      <div class="card"><h3>If it gets stuck</h3><p>Plug it into the charger. If it still doesn't wake up, ask the grown-up who gave it to you.</p></div>
+      <div class="card"><h3>What Pom Pom keeps</h3><p>Pom Pom works out where it is from the Wi-Fi networks nearby, roughly, so it can smell the air there. It keeps its sniffs, with where they were, on the stick itself. The microphone only listens during Copycat, and nothing it hears is kept or sent anywhere.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Pom Pom</b> is the AirTrack Companion, made by <a href="https://airaware.substack.com">Air Aware</a>. It runs on the AirTrack air-quality API.</p>
+    <p>The code and build instructions live on <a href="https://github.com/air-aware/airtrack-companion">GitHub</a>. Pom Pom's artwork is licensed CC BY 4.0.</p>
+  </div>
+</footer>
+
+<script>
+// Flip-books: each data-frames list is played at data-ms per frame ("pose*4" repeats one).
+// Still for anyone who prefers less motion, and only while on screen.
+(function () {
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('img[data-frames]').forEach(img => {
+    const frames = [];
+    img.dataset.frames.split(',').forEach(f => { const [name, n] = f.split('*'); for (let i = 0; i < (+n || 1); i++) frames.push('img/' + name + '.png'); });
+    [...new Set(frames)].forEach(src => { const p = new Image(); p.src = src; });   // no flicker on the first loop
+    if (still) return;
+    let i = 0, timer = null;
+    const play = () => { timer = setInterval(() => { i = (i + 1) % frames.length; img.src = frames[i]; }, +img.dataset.ms || 150); };
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!timer) play(); } else { clearInterval(timer); timer = null; } }).observe(img);
+  });
+})();
+</script>
+</body>
+</html>
