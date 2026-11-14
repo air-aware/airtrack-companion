@@ -96,6 +96,18 @@
   .anim figcaption b { font-family: Fredoka, sans-serif; font-weight: 600; font-size: 1.1rem; display: block; }
   figure { margin: 0; }
 
+  /* hearts drifting up off her head, as on the device when she's cuddled */
+  .hearts { position: relative; max-width: 170px; margin: 0 auto 14px; }
+  .hearts .sprite { margin: 0; }
+  .hearts i { position: absolute; width: 18px; height: 16px; opacity: 0; animation: rise 1.8s ease-in infinite;
+              background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 18'%3E%3Cpath d='M10 17 C3 11 1 8 1 5.5 A4.5 4.5 0 0 1 10 4 A4.5 4.5 0 0 1 19 5.5 C19 8 17 11 10 17Z' fill='%23F0627C' stroke='%231A2238' stroke-width='1.6'/%3E%3C/svg%3E"); }
+  .hearts i:nth-of-type(1) { left: 22%; top: 14%; width: 24px; height: 21px; }
+  .hearts i:nth-of-type(2) { left: 46%; top: 6%; width: 20px; height: 18px; animation-delay: .6s; }
+  .hearts i:nth-of-type(3) { left: 66%; top: 12%; width: 22px; height: 19px; animation-delay: 1.2s; }
+  @keyframes rise { 0% { opacity: 0; transform: translateY(10px) scale(.7); } 20% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px) scale(1.1); } }
+  @media (prefers-reduced-motion: reduce) { .hearts i { animation: none; opacity: 1; } }
+  .store { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; }
+
   footer { background: var(--ink); color: #E8E8F0; padding: 36px 0; margin-top: 20px; }
   footer a { color: #FFD9A8; }
 
@@ -120,6 +132,7 @@
   <div class="wrap">
     <a class="brand" href="#"><i></i>Air Aware</a>
     <nav aria-label="Sections">
+      <a href="#setup">Setting up</a>
       <a href="#start">Start here</a>
       <a href="#buttons">Buttons</a>
       <a href="#sniff">Sniff</a>
@@ -137,7 +150,8 @@
       <h1>Meet Pom Pom</h1>
       <p class="lead">A little dog on your keyring who can smell the air. When the air is clean, Pom Pom is full of beans. When it isn't, Pom Pom feels it too, and helps you find somewhere fresher.</p>
       <div class="chips">
-        <a class="chip go" href="#start">Start here</a>
+        <a class="chip go" href="#setup">Setting up</a>
+        <a class="chip" href="#start">Start here</a>
         <a class="chip" href="#care">Charge it every night</a>
         <a class="chip" href="#menu">Sound on and off</a>
       </div>
@@ -146,13 +160,27 @@
   </div>
 </div>
 
+<section id="setup" class="alt">
+  <div class="wrap">
+    <h2>Setting up (for grown-ups)</h2>
+    <p class="intro">Pom Pom gets its air readings from AirTrack, so it's set up with the AirTrack app. It takes about five minutes, at home.</p>
+    <div class="grid">
+      <div class="card step"><b class="n">1</b><h3>Get the app</h3><p>Install AirTrack on your phone and sign in. Pom Pom needs an <b>AirTrack Premium</b> account: its sniffs come out of that account's monthly allowance.</p>
+        <div class="store"><a class="chip" href="https://apps.apple.com/app/id6739182650">App Store</a><a class="chip" href="https://play.google.com/store/apps/details?id=com.airawarelabs.airtrack">Google Play</a></div></div>
+      <div class="card step"><b class="n">2</b><h3>Wake Pom Pom</h3><p>Charge it, then press a button. The first time, its screen says <b>Set me up</b> and shows a QR code.</p></div>
+      <div class="card step"><b class="n">3</b><h3>Scan the code</h3><p>Point your phone's camera at the code. It opens the AirTrack app, which talks to Pom Pom for a moment over its own little Wi-Fi network.</p></div>
+      <div class="card step"><b class="n">4</b><h3>Your Wi-Fi</h3><p>Pick your home Wi-Fi in the app and type its password. You can add your phone's hotspot too, for answers on the go. When Pom Pom shows its face, you're done.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="start">
   <div class="wrap">
     <h2>Start here</h2>
     <div class="grid">
       <div class="card step"><b class="n">1</b><h3>Charge it</h3><p>Plug Pom Pom into any USB charger with the cable. A full charge takes about two hours and lasts a school day. A bolt on the battery means it's charging.</p></div>
       <div class="card step"><b class="n">2</b><h3>Wake it up</h3><p>The screen goes off by itself to save the battery. Press either button to wake Pom Pom.</p></div>
-      <div class="card step"><b class="n">3</b><h3>Sniff!</h3><p>Press the front button and Pom Pom sniffs the air right where you are, then tells you what it smelt.</p></div>
+      <div class="card step"><b class="n">3</b><h3>Sniff!</h3><p>Press the front button and Pom Pom sniffs the air. At home it tells you straight away. Out and about it remembers, and tells you once you're home.</p></div>
       <div class="card step"><b class="n">4</b><h3>Explore the menu</h3><p>Press the side button for the menu: walkies, copycat, tricks, your finds and more.</p></div>
     </div>
   </div>
@@ -206,8 +234,9 @@
       <img class="sprite" alt="Pom Pom's nose wrinkling as it sniffs" data-frames="happy/sniff_in,happy/sniff,happy/sniff_in,happy/sniff,happy/sniff,happy/sniff" data-ms="140" src="img/happy/sniff.png">
       <div>
         <h2>Sniff the air</h2>
-        <p>Press the front button and Pom Pom's nose wrinkles while it works out the air right where you are. Then it tells you, and its mood changes to match. Really clean air sets off the zoomies; poor air and it shakes it off.</p>
-        <p>Try a busy road, then a park or a quiet back street. The difference can be big. The end of the garden won't differ from the back door, though: the air map is about streets, not steps.</p>
+        <p>Press the front button and Pom Pom's nose wrinkles while it sniffs. To work out the air, it needs to be on Wi-Fi.</p>
+        <p><b>At home</b>, it tells you straight away, and its mood changes to match. Really clean air sets off the zoomies; poor air and it shakes it off.</p>
+        <p><b>Out and about</b> there's usually no Wi-Fi, so Pom Pom remembers each sniff instead: the busy road, the park, the school gate. Back home it works them all out, and you can see how the air was along the way. If a grown-up has set up their phone's hotspot, Pom Pom can answer on the go too.</p>
         <div class="tip">Press again within twenty seconds and Pom Pom gives the same answer without asking again. Each real sniff uses one of the month's sniffs, so there's no need to keep pressing.</div>
       </div>
     </div>
@@ -262,9 +291,9 @@
     <h2>Play with Pom Pom</h2>
     <p class="intro">Pom Pom loves being treated gently. Banging or shaking it does nothing at all.</p>
     <div class="grid three">
-      <figure class="card anim"><img class="sprite" alt="Pom Pom with eyes shut, wagging" data-frames="happy/joy_up,happy/joy_up,happy/joy_dn,happy/joy_dn" data-ms="200" src="img/happy/joy_up.png"><figcaption><b>Cuddle</b>Hold Pom Pom calmly in your hand for a couple of seconds.</figcaption></figure>
-      <figure class="card anim"><img class="sprite" alt="Pom Pom with paws up, waving" data-frames="happy/belly_l*4,happy/belly_r*4" data-ms="120" src="img/happy/belly_l.png"><figcaption><b>Belly rub</b>Keep cuddling for a few seconds more: paws up!</figcaption></figure>
-      <figure class="card anim"><img class="sprite" alt="Pom Pom lifting one paw, then the other" data-frames="happy/paw_l,happy/paw_l,happy/base,happy/paw_r,happy/paw_r,happy/base" data-ms="140" src="img/happy/paw_l.png"><figcaption><b>Rock</b>Rock Pom Pom gently and it paddles its paws.</figcaption></figure>
+      <figure class="card anim"><div class="hearts"><img class="sprite" alt="Pom Pom with eyes shut, wagging" data-frames="happy/joy_up,happy/joy_up,happy/joy_dn,happy/joy_dn" data-ms="200" src="img/happy/joy_up.png"><i></i><i></i><i></i></div><figcaption><b>Cuddle</b>Hold Pom Pom calmly in your hand for a couple of seconds.</figcaption></figure>
+      <figure class="card anim"><div class="hearts"><img class="sprite" alt="Pom Pom with paws up, waving" data-frames="happy/belly_l*4,happy/belly_r*4" data-ms="120" src="img/happy/belly_l.png"><i></i><i></i><i></i></div><figcaption><b>Belly rub</b>Keep cuddling for a few seconds more: paws up!</figcaption></figure>
+      <figure class="card anim"><div class="hearts"><img class="sprite" alt="Pom Pom lifting one paw, then the other" data-frames="happy/paw_l,happy/paw_l,happy/base,happy/paw_r,happy/paw_r,happy/base" data-ms="140" src="img/happy/paw_l.png"><i></i><i></i><i></i></div><figcaption><b>Rock</b>Rock Pom Pom gently and it paddles its paws.</figcaption></figure>
       <figure class="card anim"><img class="sprite" alt="Pom Pom tilting its head to listen" data-frames="happy/tilt_l*4,happy/base*4,happy/tilt_r*4,happy/base*4" data-ms="120" src="img/happy/tilt_l.png"><figcaption><b>Copycat</b>Pom Pom tilts its head to listen, then says it back.</figcaption></figure>
       <figure class="card anim"><img class="sprite" alt="Pom Pom dashing side to side" data-frames="thriving/zoom_l*2,thriving/zoom_up*2,thriving/zoom_r*2,thriving/zoom_up*2" data-ms="120" src="img/thriving/zoom_l.png"><figcaption><b>Zoomies</b>Find really clean air and Pom Pom races about.</figcaption></figure>
       <figure class="card anim"><img class="sprite" alt="Pom Pom shaking its fur, eyes shut" data-frames="panting/shake_l,panting/shake_r" data-ms="120" src="img/panting/shake_l.png"><figcaption><b>Shake it off</b>After poor air, a good shake, then off somewhere fresher.</figcaption></figure>
